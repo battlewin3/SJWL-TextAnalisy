@@ -1,0 +1,10 @@
+streamlit
+pandas
+jieba
+scikit-learn
+plotly
+spacy
+networkx
+matplotlib
+wordcloud
+chardet

@@ -1,0 +1,6 @@
+To estimate the semantic ratings of Chinese words, we first use "train_decode.py" to learn a mapping function from Chinese  embedding space to semantic ratings based on the 17,940 human-annotated semantic ratings with their corresponding
+Word embeddings. Then we utilize "predict.py" to generate the semantic ratings of all extensional Chinese words.
+
+For English words, to estimate their semantic ratings, we need to align the mapping relations between English and Chinese embedding space beforehand. To achieve that, we first use "extract_en.py" and "extract_zh.py" to extract word representations that are in the Chinese-English bilingual lexicon, and then use "match.py" and "train_align.py" to learn the mapping function from English to Chinese word representations. Finally, based on the two mapping functions including English-Chinese mapping and Chinese to semantic ratings, we use "predict.py" to project English embedding peace to that of Chinese to generate the semantic ratings of all extensional English words.
+
+To validate the above results, we use "corr_binder.py" and "corr_binder_cn.py". To compute correlations between the extensional ratings with corresponding scores in Binder et al. (2016).

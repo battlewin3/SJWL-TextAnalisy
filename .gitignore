@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Data
+# Ignore all content within the data directory, but not the directory itself.
+# Use a .gitkeep file in the data directory if you want to keep the empty directory in version control.
+data/*
+!data/.gitkeep
+*.csv
+
+# IDE
+.vscode/
+.idea/
+
+# Streamlit
+.streamlit/
