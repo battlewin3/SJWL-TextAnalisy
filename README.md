@@ -54,7 +54,7 @@ Please ensure you have this font or a similar Chinese font installed on your sys
 Once the setup is complete, you can run the Streamlit application with the following command:
 
 ```bash
-streamlit run app.py
+python -m streamlit run app.py
 ```
 
 This will start a local web server and open the application in your default web browser. You can then upload a `.txt` file and select an analysis method from the sidebar to begin.
