@@ -17,7 +17,6 @@ venv.bak/
 # Use a .gitkeep file in the data directory if you want to keep the empty directory in version control.
 data/*
 !data/.gitkeep
-*.csv
 
 # IDE
 .vscode/
