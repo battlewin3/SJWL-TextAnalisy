@@ -143,15 +143,35 @@ def calculate_tfidf(cleaned_text: str) -> pd.DataFrame:
 
 def perform_lda(cleaned_text: str, num_topics: int = 5, top_words: int = 10) -> (dict, str):
     words = cleaned_text.split()
-    if len(words) < num_topics: return None, "文本过短，无法进行主题建模。"
-    vectorizer = CountVectorizer()
-    doc_term_matrix = vectorizer.fit_transform([cleaned_text])
-    lda = LatentDirichletAllocation(n_components=num_topics, random_state=42)
-    lda.fit(doc_term_matrix)
-    feature_names = vectorizer.get_feature_names_out()
-    topics = {f"主题 {i+1}": [feature_names[j] for j in topic.argsort()[:-top_words-1:-1]] 
-              for i, topic in enumerate(lda.components_)}
-    return topics, None
+    if len(words) < num_topics * top_words:
+        return None, "文本过短，无法进行有效的主题建模。"
+
+    # 将长文本分割成多个“文档”以提高LDA效果
+    doc_length = 200  # 每个文档的词数
+    documents = [" ".join(words[i:i + doc_length]) for i in range(0, len(words), doc_length)]
+    documents = [doc for doc in documents if doc.strip()]
+
+    # 如果文档数量少于主题数，则无法进行有意义的建模
+    if len(documents) < num_topics:
+        return None, "文本内容不足以分割成足够多的文档来进行请求的主题分析。"
+
+    try:
+        vectorizer = CountVectorizer()
+        doc_term_matrix = vectorizer.fit_transform(documents)
+        
+        # 确保词汇表大小至少为1
+        if doc_term_matrix.shape[1] == 0:
+            return None, "文本在预处理后为空，无法进行主题建模。"
+
+        lda = LatentDirichletAllocation(n_components=num_topics, random_state=42)
+        lda.fit(doc_term_matrix)
+        
+        feature_names = vectorizer.get_feature_names_out()
+        topics = {f"主题 {i + 1}": [feature_names[j] for j in topic.argsort()[:-top_words - 1:-1]]
+                  for i, topic in enumerate(lda.components_)}
+        return topics, None
+    except Exception as e:
+        return None, f"LDA建模时发生错误: {e}"
 
 def perform_ner(raw_text: str) -> (list, str):
     if not nlp: return None, "spaCy模型未加载，无法执行NER。"
