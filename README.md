@@ -23,8 +23,8 @@ The tool currently supports the following analysis and visualization methods:
 ### 2. Clone the Repository
 
 ```bash
-git clone <repository_url>
-cd <repository_directory>
+git clone https://github.com/battlewin3/SJWL-TextAnalisy.git
+cd SJWL-TextAnalisy
 ```
 
 ### 3. Install Dependencies
